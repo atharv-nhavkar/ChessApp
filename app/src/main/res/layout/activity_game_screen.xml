@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameScreen">
+
+    <TextView
+        android:id="@+id/chessboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elegantTextHeight="true"
+        android:fontFamily="sans-serif-medium"
+        android:text="chess Board"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.453"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chessboard"
+        app:srcCompat="@drawable/cboard" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chessboard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="tap"
+                android:tag="A8"
+                app:srcCompat="@drawable/brook" />
+
+            <ImageView
+                android:id="@+id/B8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="tap"
+                android:tag="B8"
+                app:srcCompat="@drawable/bknight" />
+
+            <ImageView
+                android:id="@+id/C8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bbishop" />
+
+            <ImageView
+                android:id="@+id/D8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bqueen" />
+
+            <ImageView
+                android:id="@+id/E8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bking" />
+
+            <ImageView
+                android:id="@+id/F8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bbishop" />
+
+            <ImageView
+                android:id="@+id/G8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bknight" />
+
+            <ImageView
+                android:id="@+id/H8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H8"
+                android:onClick="tap"
+                app:srcCompat="@drawable/brook" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:srcCompat="@drawable/bpawn">
+
+            <ImageView
+                android:id="@+id/A7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A7"
+                android:onClick="tap"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/B7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="tap"
+
+                android:tag="A7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/C7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="tap"
+                android:tag="C7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/D7"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/E7"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/F7"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/G7"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G7"
+                app:srcCompat="@drawable/bpawn" />
+
+            <ImageView
+                android:id="@+id/H7"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H7"
+                app:srcCompat="@drawable/bpawn" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:id="@+id/A6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A6" />
+
+            <ImageView
+                android:id="@+id/B6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B6" />
+
+            <ImageView
+                android:id="@+id/C6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C6" />
+
+            <ImageView
+                android:id="@+id/D6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D6" />
+
+            <ImageView
+                android:id="@+id/E6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E6" />
+
+            <ImageView
+                android:id="@+id/F6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F6" />
+
+            <ImageView
+                android:id="@+id/G6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G6" />
+
+            <ImageView
+                android:id="@+id/H6"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H6" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A5" />
+
+            <ImageView
+                android:id="@+id/B5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B5" />
+
+            <ImageView
+                android:id="@+id/C5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C5" />
+
+            <ImageView
+                android:id="@+id/D5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D5" />
+
+            <ImageView
+                android:id="@+id/E5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E5" />
+
+            <ImageView
+                android:id="@+id/F5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F5" />
+
+            <ImageView
+                android:id="@+id/G5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G5" />
+
+            <ImageView
+                android:id="@+id/H5"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A4" />
+
+            <ImageView
+                android:id="@+id/B4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B4" />
+
+            <ImageView
+                android:id="@+id/C4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C4" />
+
+            <ImageView
+                android:id="@+id/D4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D4" />
+
+            <ImageView
+                android:id="@+id/E4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E4" />
+
+            <ImageView
+                android:id="@+id/F4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F4" />
+
+            <ImageView
+                android:id="@+id/G4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G4" />
+
+            <ImageView
+                android:id="@+id/H4"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A3" />
+
+            <ImageView
+                android:id="@+id/B3"
+                android:layout_width="match_parent"
+                android:onClick="tap"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B3" />
+
+            <ImageView
+                android:id="@+id/C3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C3" />
+
+            <ImageView
+                android:id="@+id/D3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D3" />
+
+            <ImageView
+                android:id="@+id/E3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E3" />
+
+            <ImageView
+                android:id="@+id/F3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F3" />
+
+            <ImageView
+                android:id="@+id/G3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G3" />
+
+            <ImageView
+                android:id="@+id/H3"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H3" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/B2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/C2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/D2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/E2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/F2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/G2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G2"
+                app:srcCompat="@drawable/wpawn" />
+
+            <ImageView
+                android:id="@+id/H2"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H2"
+                app:srcCompat="@drawable/wpawn" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/A1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="A1"
+                app:srcCompat="@drawable/wrook" />
+
+            <ImageView
+                android:id="@+id/B1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="B1"
+                app:srcCompat="@drawable/wknight" />
+
+            <ImageView
+                android:id="@+id/C1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="C1"
+                app:srcCompat="@drawable/wbishop" />
+
+            <ImageView
+                android:id="@+id/D1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="D1"
+                app:srcCompat="@drawable/wqueen" />
+
+            <ImageView
+                android:id="@+id/E1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="E1"
+                app:srcCompat="@drawable/wking" />
+
+            <ImageView
+                android:id="@+id/F1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="F1"
+                app:srcCompat="@drawable/wbishop" />
+
+            <ImageView
+                android:id="@+id/G1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="G1"
+                app:srcCompat="@drawable/wknight" />
+
+            <ImageView
+                android:id="@+id/H1"
+                android:onClick="tap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:tag="H1"
+                app:srcCompat="@drawable/wrook" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

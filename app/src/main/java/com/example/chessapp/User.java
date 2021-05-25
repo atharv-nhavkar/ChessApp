@@ -2,6 +2,12 @@ package com.example.chessapp;
 
 public class User {
     String user;
+    String fen ;
+    Boolean online ;
+    Boolean free;
+
+
+
 
     public String getUser() {
         return user;
@@ -35,21 +41,17 @@ public class User {
         this.free = free;
     }
 
-    String fen ;
-    Boolean online ;
-    Boolean free;
 
     public User(){
-        // asie hi sexy lag raha tha
     }
+
 
     public User(String user, String fen, Boolean online, Boolean free) {
         this.user = user;
         this.fen = fen;
+
         this.online = online;
         this.free = free;
     }
-
-
 }
 

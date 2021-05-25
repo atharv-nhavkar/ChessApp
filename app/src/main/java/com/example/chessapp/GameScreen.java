@@ -16,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class GameScreen extends AppCompatActivity {
 
+    TextView turntextview ;
     int [][] legalMoves = new int[8][8];
     int i=0,j=0;
     int activeplayer ; // 1-->white to play ,   0-->black to play
@@ -51,10 +52,12 @@ public class GameScreen extends AppCompatActivity {
         setContentView(R.layout.activity_game_screen);
         activeplayer = getIntent().getExtras().getInt("activeplayer");
         // take the value of activeplayer from intent or other ideas.
+        String gamelink = getIntent().getExtras().getString("link");
+        ref = FirebaseDatabase.getInstance().getReference().child("games").child(gamelink);
 
+        Toast.makeText(getApplicationContext(), "game link is : " + gamelink , Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), "activeplayer is : " + activeplayer , Toast.LENGTH_SHORT).show();
-        ref = FirebaseDatabase.getInstance().getReference().child("game0");
-
+        turntextview = (TextView)findViewById(R.id.turn);
         if(activeplayer==1){
             String FEN = whiteboardtoFEN();
             Game game = new Game(FEN,1);
@@ -78,8 +81,15 @@ public class GameScreen extends AppCompatActivity {
                     int turn = game.getTurn();
                     //Toast.makeText(GameScreen.this, "FEN is  " + FEN, Toast.LENGTH_SHORT).show();
 
-                    if(activeplayer==1)
-                        FENtowhiteboard(board,FEN);
+
+                    if(turn == 1)
+                        turntextview.setText("white to play");
+                    else if (turn == 0)
+                        turntextview.setText("black to play ");
+
+                    if(activeplayer==1) {
+                        FENtowhiteboard(board, FEN);
+                    }
                     else if(activeplayer == 0)
                         FENtoblackboard(board,FEN);
 
@@ -436,6 +446,45 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    void putpurpinviewforblack(char c, ImageView iv){
+        switch(c){
+            case 'q':
+                iv.setImageResource(R.drawable.wqueenpurp);
+                break;
+            case 'n':
+                iv.setImageResource(R.drawable.wknightpurp);
+                break;
+            case 'b':
+                iv.setImageResource(R.drawable.wbishoppurp);
+                break;
+            case 'r':
+                iv.setImageResource(R.drawable.wrookpurp);
+                break;
+            case 'p':
+                iv.setImageResource(R.drawable.wpawnpurp);
+                break;
+            case 'Q':
+                iv.setImageResource(R.drawable.bqueenpurp);
+                break;
+            case 'N':
+                iv.setImageResource(R.drawable.bknightpurp);
+                break;
+            case 'B':
+                iv.setImageResource(R.drawable.bbishoppurp);
+                break;
+            case 'R':
+                iv.setImageResource(R.drawable.brookpurp);
+                break;
+            case 'P':
+                iv.setImageResource(R.drawable.bpawnpurp);
+                break;
+            case '.':
+                iv.setImageResource(R.drawable.legalmoveemptysquare);
+
+        }
+    }
+
+
     void putinview(char c, ImageView iv){
         switch(c){
             case 'K':
@@ -755,20 +804,23 @@ public class GameScreen extends AppCompatActivity {
         return retview;
     }
 
-//    void markvalidmoves(int i,int j){
-//        if(i==-1 || j ==-1 )
-//            return;
-//        ImageView sq= giveimageview(i,j);
-//        putpurpinview(board[i][j],sq);
-//        for(int u=0;u<8;u++) {
-//            for(int v=0;v<8;v++){
-//                if(legalMoves[u][v]==1){
-//                    ImageView square= giveimageview(u,v);
-//                    putpurpinview(board[u][v],square);
-//                }
-//            }
-//        }
-//    }
+    void markvalidmoves(int i,int j){
+        if(i==-1 || j ==-1 )
+            return;
+        ImageView sq= giveimageview(i,j);
+        putpurpinview(board[i][j],sq);
+        for(int u=0;u<8;u++) {
+            for(int v=0;v<8;v++){
+                if(legalMoves[u][v]==1){
+                    ImageView square= giveimageview(u,v);
+                    if(activeplayer==1)
+                        putpurpinview(board[u][v],square);
+                    if(activeplayer==0)
+                        putpurpinviewforblack(board[u][v],square);
+                }
+            }
+        }
+    }
 
     void unmarkvalidmoves(int i,int j){
         if(i==-1 || j ==-1 )
@@ -791,13 +843,25 @@ public class GameScreen extends AppCompatActivity {
     void markcheckking(int color){
         for(int i=0;i<8;i++){
             for(int j=0;j<8;j++){
-                if(color==1 && board[i][j]=='K'){
-                    ImageView square= giveimageview(i,j);
-                    square.setImageResource(R.drawable.wkingred);
+                if(color==1 ){
+                    if(activeplayer==1 && board[i][j]=='K'){
+                        ImageView square= giveimageview(i,j);
+                        square.setImageResource(R.drawable.wkingred);
+                    }
+                    if(activeplayer==0 && board[i][j]=='k'){
+                        ImageView square= giveimageview(i,j);
+                        square.setImageResource(R.drawable.wkingred);
+                    }
                 }
-                if(color==0 && board[i][j]=='k'){
-                    ImageView square= giveimageview(i,j);
-                    square.setImageResource(R.drawable.bkingred);
+                if(color==0){
+                    if(activeplayer==1 && board[i][j]=='k'){
+                        ImageView square= giveimageview(i,j);
+                        square.setImageResource(R.drawable.bkingred);
+                    }
+                    if(activeplayer==0 && board[i][j]=='K'){
+                        ImageView square= giveimageview(i,j);
+                        square.setImageResource(R.drawable.bkingred);
+                    }
                 }
             }
         }
@@ -882,7 +946,7 @@ public class GameScreen extends AppCompatActivity {
                     lasttap=true;
                     lastview = iv;
                     // indicate on board all the 1s present on leagl move array
-                    // markvalidmoves(i,j);
+                    markvalidmoves(i,j);
                 }
                 else
                     ;// player has tapped the square of same color

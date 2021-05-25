@@ -274,7 +274,7 @@ class Chess {
         allpeices[u][v]=allpeices[i][j];
         allpeices[u][v].set(v,u,allpeices[i][j].getColor());
         if(board[u][v]=='P'|| board[u][v]=='p'){
-            allpeices[u][v].forpawn=false;
+            allpeices[u][v].setForpawn(false);
         }
         allpeices[i][j]=null;
     }
@@ -311,7 +311,11 @@ abstract class piece{
         return color;
     }
 
-    abstract void getMoves(char[][] board,int [][] moves);
+    public void setForpawn(boolean forpawn) {
+        this.forpawn = forpawn;
+    }
+
+    abstract void getMoves(char[][] board, int [][] moves);
     abstract void getControlledSquares(char[][] board,int [][] boardControl);
 
 }

@@ -1,5 +1,7 @@
 package com.example.chessapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+public class new_login extends AppCompatActivity {
     private EditText username , password;
     Button login,signup;
     DatabaseReference mDatabase;
@@ -35,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_login);
+        username = findViewById(R.id.editTextTextEmailAddress);
 
-        username =(EditText) findViewById(R.id.editTextTextEmailAddress);
         mAuth= FirebaseAuth.getInstance();
-        password = (EditText) findViewById(R.id.editTextTextPassword);
+        password = findViewById(R.id.editTextTextPassword);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         login = findViewById(R.id.button);
         login.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser userref = mAuth.getCurrentUser();
                             String userID =userref.getUid();
+                            Toast.makeText(getApplicationContext(), userID, Toast.LENGTH_SHORT).show();
+
+
+
 
                             ValueEventListener forusername = new ValueEventListener() {
                                 @Override

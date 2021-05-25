@@ -76,8 +76,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="C8"
                 android:onClick="tap"
+                android:tag="C8"
                 app:srcCompat="@drawable/bbishop" />
 
             <ImageView
@@ -85,8 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="D8"
                 android:onClick="tap"
+                android:tag="D8"
                 app:srcCompat="@drawable/bqueen" />
 
             <ImageView
@@ -94,8 +94,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="E8"
                 android:onClick="tap"
+                android:tag="E8"
                 app:srcCompat="@drawable/bking" />
 
             <ImageView
@@ -103,8 +103,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="F8"
                 android:onClick="tap"
+                android:tag="F8"
                 app:srcCompat="@drawable/bbishop" />
 
             <ImageView
@@ -112,8 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="G8"
                 android:onClick="tap"
+                android:tag="G8"
                 app:srcCompat="@drawable/bknight" />
 
             <ImageView
@@ -121,8 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="H8"
                 android:onClick="tap"
+                android:tag="H8"
                 app:srcCompat="@drawable/brook" />
         </LinearLayout>
 
@@ -138,8 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:tag="A7"
                 android:onClick="tap"
+                android:tag="A7"
                 app:srcCompat="@drawable/bpawn" />
 
             <ImageView
@@ -163,46 +163,46 @@
 
             <ImageView
                 android:id="@+id/D7"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D7"
                 app:srcCompat="@drawable/bpawn" />
 
             <ImageView
                 android:id="@+id/E7"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E7"
                 app:srcCompat="@drawable/bpawn" />
 
             <ImageView
                 android:id="@+id/F7"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F7"
                 app:srcCompat="@drawable/bpawn" />
 
             <ImageView
                 android:id="@+id/G7"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G7"
                 app:srcCompat="@drawable/bpawn" />
 
             <ImageView
                 android:id="@+id/H7"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H7"
                 app:srcCompat="@drawable/bpawn" />
         </LinearLayout>
@@ -211,47 +211,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/A6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A6" />
 
             <ImageView
                 android:id="@+id/B6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B6" />
 
             <ImageView
                 android:id="@+id/C6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C6" />
 
             <ImageView
                 android:id="@+id/D6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D6" />
 
             <ImageView
                 android:id="@+id/E6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E6" />
 
             <ImageView
@@ -263,18 +262,18 @@
 
             <ImageView
                 android:id="@+id/G6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G6" />
 
             <ImageView
                 android:id="@+id/H6"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H6" />
         </LinearLayout>
 
@@ -286,66 +285,66 @@
 
             <ImageView
                 android:id="@+id/A5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A5" />
 
             <ImageView
                 android:id="@+id/B5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B5" />
 
             <ImageView
                 android:id="@+id/C5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C5" />
 
             <ImageView
                 android:id="@+id/D5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D5" />
 
             <ImageView
                 android:id="@+id/E5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E5" />
 
             <ImageView
                 android:id="@+id/F5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F5" />
 
             <ImageView
                 android:id="@+id/G5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G5" />
 
             <ImageView
                 android:id="@+id/H5"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H5" />
         </LinearLayout>
 
@@ -357,66 +356,66 @@
 
             <ImageView
                 android:id="@+id/A4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A4" />
 
             <ImageView
                 android:id="@+id/B4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B4" />
 
             <ImageView
                 android:id="@+id/C4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C4" />
 
             <ImageView
                 android:id="@+id/D4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D4" />
 
             <ImageView
                 android:id="@+id/E4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E4" />
 
             <ImageView
                 android:id="@+id/F4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F4" />
 
             <ImageView
                 android:id="@+id/G4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G4" />
 
             <ImageView
                 android:id="@+id/H4"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H4" />
         </LinearLayout>
 
@@ -428,66 +427,66 @@
 
             <ImageView
                 android:id="@+id/A3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A3" />
 
             <ImageView
                 android:id="@+id/B3"
                 android:layout_width="match_parent"
-                android:onClick="tap"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B3" />
 
             <ImageView
                 android:id="@+id/C3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C3" />
 
             <ImageView
                 android:id="@+id/D3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D3" />
 
             <ImageView
                 android:id="@+id/E3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E3" />
 
             <ImageView
                 android:id="@+id/F3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F3" />
 
             <ImageView
                 android:id="@+id/G3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G3" />
 
             <ImageView
                 android:id="@+id/H3"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H3" />
         </LinearLayout>
 
@@ -499,73 +498,73 @@
 
             <ImageView
                 android:id="@+id/A2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/B2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/C2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/D2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/E2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/F2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/G2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G2"
                 app:srcCompat="@drawable/wpawn" />
 
             <ImageView
                 android:id="@+id/H2"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H2"
                 app:srcCompat="@drawable/wpawn" />
         </LinearLayout>
@@ -578,77 +577,88 @@
 
             <ImageView
                 android:id="@+id/A1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="A1"
                 app:srcCompat="@drawable/wrook" />
 
             <ImageView
                 android:id="@+id/B1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="B1"
                 app:srcCompat="@drawable/wknight" />
 
             <ImageView
                 android:id="@+id/C1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="C1"
                 app:srcCompat="@drawable/wbishop" />
 
             <ImageView
                 android:id="@+id/D1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="D1"
                 app:srcCompat="@drawable/wqueen" />
 
             <ImageView
                 android:id="@+id/E1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="E1"
                 app:srcCompat="@drawable/wking" />
 
             <ImageView
                 android:id="@+id/F1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="F1"
                 app:srcCompat="@drawable/wbishop" />
 
             <ImageView
                 android:id="@+id/G1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="G1"
                 app:srcCompat="@drawable/wknight" />
 
             <ImageView
                 android:id="@+id/H1"
-                android:onClick="tap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:onClick="tap"
                 android:tag="H1"
                 app:srcCompat="@drawable/wrook" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/turn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chessboard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

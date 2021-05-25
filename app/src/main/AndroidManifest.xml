@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChessApp">
-        <activity android:name=".After_login"></activity>
+        <activity android:name=".new_login"></activity>
+        <activity android:name=".Challenger" />
+        <activity android:name=".After_login" />
         <activity android:name=".GameScreen" />
         <activity android:name=".Register">
             android:parentActivityName=".MainActivity">
@@ -21,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

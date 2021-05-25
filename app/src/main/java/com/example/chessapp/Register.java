@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,9 +61,34 @@ public class Register extends AppCompatActivity {
                         if(passwordstring1.equals(passwordstring2))
                         {
                             if(newusername.isEmpty())
-                                Toast.makeText(getApplicationContext(),"ebter username please ",Toast.LENGTH_SHORT).show();
-                            else
-                                createAccount(email,passwordstring1,newusername);
+                                Toast.makeText(getApplicationContext(),"enter username please ",Toast.LENGTH_SHORT).show();
+                            else{
+                                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                                DatabaseReference userNameRef = rootRef.child("Users").child(newusername);
+                                ValueEventListener eventListener = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(!dataSnapshot.exists()) {
+                                            createAccount(email,passwordstring1,newusername);
+                                            //create new user
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(),  "Be creative find new username ", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                        Toast.makeText(getApplicationContext(),   databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                        //Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
+                                    }
+                                };
+                                userNameRef.addListenerForSingleValueEvent(eventListener);
+
+                            }
+
                         }
                         else{
                             Toast.makeText(getApplicationContext(),"Password does n0t match ",Toast.LENGTH_SHORT).show();
@@ -88,7 +114,8 @@ public class Register extends AppCompatActivity {
                             String userID= mAuth.getCurrentUser().getUid();
                             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
                             User newuser = new User(newusername,"NOGAMENOW",true,true);
-                            myRef.child("users").child(userID).setValue(newuser);
+                            myRef.child("users").child(newusername).setValue(newuser);
+                            myRef.child("config").child(userID).setValue(newusername);
 
                             Toast.makeText(getApplicationContext(), " Registred Succesfully ", Toast.LENGTH_SHORT).show();
                             // Sign in success, update UI with the signed-in user's information

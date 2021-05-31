@@ -265,6 +265,154 @@ class Chess {
                 }
             }
         }
+        // special castling case starts
+        if(board[i][j]=='k' && i==0 && j==4 ){
+
+
+            int[][] boardControl = new int [8][8];
+            for(int u=0;u<8;u++)
+            {
+                for(int v=0;v<8;v++)
+                {
+                    if(allpeices[u][v]==null)
+                        continue;
+                    if(allpeices[u][v].getColor()==1)
+                    {
+                        allpeices[u][v].getControlledSquares(board, boardControl);
+                    }
+                }
+            }
+            if(board[i][j+1]=='.' && board[i][j+2]=='.' && boardControl[i][j+1]==0 && boardControl[i][j+2]==0 && board[i][7]=='r' ){
+                legalMoves[i][j+2]=2; // castling special case
+            }
+            if(board[i][j-1]=='.' && board[i][j-2]=='.' && board[i][j-3]=='.' && boardControl[i][j-1]==0 && boardControl[i][j-2]==0 && boardControl[i][j-3]==0 && board[i][0]=='r'){
+                legalMoves[i][j-2]=2; // castling special case
+            }
+
+        }
+        else if (board[i][j]=='K' && i==7 && j==4 ){
+
+
+            int[][] boardControl = new int [8][8];
+            for(int u=0;u<8;u++)
+            {
+                for(int v=0;v<8;v++)
+                {
+                    if(allpeices[u][v]==null)
+                        continue;
+                    if(allpeices[u][v].getColor()==0)
+                    {
+                        allpeices[u][v].getControlledSquares(board, boardControl);
+                    }
+                }
+            }
+            if(board[i][j+1]=='.' && board[i][j+2]=='.' && boardControl[i][j+1]==0 && boardControl[i][j+2]==0 && board[i][7]=='R' ){
+                legalMoves[i][j+2]=2; // castling special case
+            }
+            if(board[i][j-1]=='.' && board[i][j-2]=='.' && board[i][j-3]=='.' && boardControl[i][j-1]==0 && boardControl[i][j-2]==0 && boardControl[i][j-3]==0 && board[i][0]=='R'){
+                legalMoves[i][j-2]=2; // castling special case
+            }
+        }
+        else if (board[i][j]=='K' && i==7 && j==3 ){   // black player multiplayer
+
+
+            int[][] boardControl = new int [8][8];
+            for(int u=0;u<8;u++)
+            {
+                for(int v=0;v<8;v++)
+                {
+                    if(allpeices[u][v]==null)
+                        continue;
+                    if(allpeices[u][v].getColor()==0)
+                    {
+                        allpeices[u][v].getControlledSquares(board, boardControl);
+                    }
+                }
+            }
+            if(board[i][j-1]=='.' && board[i][j-2]=='.' && boardControl[i][j-1]==0 && boardControl[i][j-2]==0 && board[i][0]=='R' ){
+                legalMoves[i][j-2]=2; // castling special case
+            }
+            if(board[i][j+1]=='.' && board[i][j+2]=='.' && board[i][j+3]=='.' && boardControl[i][j+1]==0 && boardControl[i][j+2]==0 && boardControl[i][j+3]==0 && board[i][7]=='R'){
+                legalMoves[i][j+2]=2; // castling special case
+            }
+        }
+
+        // special castling case ends
+
+        // pawn double push starts
+        if(board[i][j]=='P' && i==6 ){
+            if(board[i-2][j]=='.' && board[i-1][j]=='.'){
+                int u=i-2,v = j;
+                char prevCharatuv=board[u][v];
+                char prevCharatij=board[i][j];
+                board[u][v]=board[i][j];
+                board[i][j]='.';
+                piece prevPeiceatuv = allpeices[u][v];
+                piece prevPeiceatij = allpeices[i][j];
+                allpeices[u][v]=allpeices[i][j];
+                allpeices[u][v].set(v,u,color);
+                allpeices[i][j]=null;
+                if(isCheck(board, color))
+                {
+                    allpeices[i][j]=prevPeiceatij;
+                    if(allpeices[i][j]!=null)
+                        allpeices[i][j].set(j,i,color);
+                    allpeices[u][v]=prevPeiceatuv;
+                    if(allpeices[u][v]!=null)
+                        allpeices[u][v].set(v,u,allpeices[u][v].getColor());
+                    board[i][j]=prevCharatij;
+                    board[u][v]=prevCharatuv;
+                    legalMoves[u][v]=0;
+                }
+                allpeices[i][j]=prevPeiceatij;
+                if(allpeices[i][j]!=null)
+                    allpeices[i][j].set(j,i,color);
+                allpeices[u][v]=prevPeiceatuv;
+                if(allpeices[u][v]!=null)
+                    allpeices[u][v].set(v,u,allpeices[u][v].getColor());
+                board[i][j]=prevCharatij;
+                board[u][v]=prevCharatuv;
+
+            }
+        }
+
+        if(board[i][j]=='p' && i==1 ){
+            if(board[i+2][j]=='.' && board[i+1][j]=='.'){
+                int u=i+2,v = j;
+                char prevCharatuv=board[u][v];
+                char prevCharatij=board[i][j];
+                board[u][v]=board[i][j];
+                board[i][j]='.';
+                piece prevPeiceatuv = allpeices[u][v];
+                piece prevPeiceatij = allpeices[i][j];
+                allpeices[u][v]=allpeices[i][j];
+                allpeices[u][v].set(v,u,color);
+                allpeices[i][j]=null;
+                if(isCheck(board, color))
+                {
+                    allpeices[i][j]=prevPeiceatij;
+                    if(allpeices[i][j]!=null)
+                        allpeices[i][j].set(j,i,color);
+                    allpeices[u][v]=prevPeiceatuv;
+                    if(allpeices[u][v]!=null)
+                        allpeices[u][v].set(v,u,allpeices[u][v].getColor());
+                    board[i][j]=prevCharatij;
+                    board[u][v]=prevCharatuv;
+                    legalMoves[u][v]=0;
+                }
+                allpeices[i][j]=prevPeiceatij;
+                if(allpeices[i][j]!=null)
+                    allpeices[i][j].set(j,i,color);
+                allpeices[u][v]=prevPeiceatuv;
+                if(allpeices[u][v]!=null)
+                    allpeices[u][v].set(v,u,allpeices[u][v].getColor());
+                board[i][j]=prevCharatij;
+                board[u][v]=prevCharatuv;
+
+            }
+        }
+
+
     }
 
     public void makeMove(int i,int j,int u,int v,char[][]board)// move peice from i,j to u,v
@@ -273,9 +421,37 @@ class Chess {
         board[i][j]='.';
         allpeices[u][v]=allpeices[i][j];
         allpeices[u][v].set(v,u,allpeices[i][j].getColor());
-        if(board[u][v]=='P'|| board[u][v]=='p'){
-            allpeices[u][v].setForpawn(false);
+//        if(board[u][v]=='P'|| board[u][v]=='p'){
+//            allpeices[u][v].setForpawn(false);
+//        }
+        allpeices[i][j]=null;
+    }
+
+    public void castlinemove(int i,int j,int u,int v,char[][]board)// move peice from i,j to u,v
+    {
+        makeMove(i,j, u, v,board);
+        if(v==5 || v==6){
+            makeMove(i,7,u,v-1,board);
         }
+        else if(v==1 || v==2){
+            makeMove(i,0,u,v+1,board);
+        }
+
+    }
+
+    public void promotionmove(int i,int j,int u,int v,char ch,char[][]board)// move peice from i,j to u,v
+    {
+        board[u][v]=ch;
+        board[i][j]='.';
+        allpeices[u][v]=allpeices[i][j];
+        if(ch =='N')
+            allpeices[u][v]=new Knight(v,u,allpeices[i][j].getColor());
+        else if(ch == 'B')
+            allpeices[u][v]=new Bishop(v,u,allpeices[i][j].getColor());
+        else if(ch == 'R')
+            allpeices[u][v]=new Rook(v,u,allpeices[i][j].getColor());
+        else if(ch == 'Q')
+            allpeices[u][v]=new Queen(v,u,allpeices[i][j].getColor());
         allpeices[i][j]=null;
     }
 }
@@ -288,12 +464,12 @@ abstract class piece{
     public int x;
     public int y;
     public int color;
-    public boolean forpawn;
+    public boolean hasplayed;
     public void set(int x,int y,int color){
         this.x=x;
         this.y=y;
         this.color=color;
-        forpawn = true;
+        hasplayed = false;
     }
 
     public int getX()
@@ -311,8 +487,24 @@ abstract class piece{
         return color;
     }
 
-    public void setForpawn(boolean forpawn) {
-        this.forpawn = forpawn;
+    public boolean isHasplayed() {
+        return hasplayed;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
+    public void setHasplayed(boolean hasplayed) {
+        this.hasplayed = hasplayed;
     }
 
     abstract void getMoves(char[][] board, int [][] moves);
@@ -342,14 +534,12 @@ class Pawn extends piece{
         this.y=y;
         this.color=color;
         virgin=true;
-        forpawn=true;
     }
 
     public Pawn(int x,int y,int color){
         this.x=x;
         this.y=y;
         this.color=color;
-        forpawn=true;
     }
 
     public  void firstmove(){
@@ -375,13 +565,11 @@ class Pawn extends piece{
             {
                 int pos1x=x;
                 int pos1y=y-1;
-                moves[pos1y][pos1x]=1;
-                if(board[y-2][x]=='.'&& forpawn==true)
-                {
-                    int pos2x=x;
-                    int pos2y=y-2;
-                    moves[pos2y][pos2x]=1;
-                }
+                if(y-1==0)
+                    moves[pos1y][pos1x]=3; // 3 denotes promotion spacial case
+                else
+                    moves[pos1y][pos1x]=1;
+
             }
             // apply code for on passent
             if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0))
@@ -389,16 +577,25 @@ class Pawn extends piece{
                 int pos1x=x+1;
                 int pos1y=y-1;
                 char ch= board[pos1y][pos1x];
-                if( (ch>='a') && (ch <='z')  )
-                    moves[pos1y][pos1x]=1;
+                if( (ch>='a') && (ch <='z')  ) {
+                    if(pos1y==0)
+                        moves[pos1y][pos1x] = 3; // 3 denotes promotion spacial case
+                    else
+                        moves[pos1y][pos1x] = 1;
+                }
             }
             if((x-1<8 && x-1>=0) && (y-1<8 && y-1>=0))
             {
                 int pos2x=x-1;
                 int pos2y=y-1;
                 char ch=board[pos2y][pos2x];
-                if( (ch>='a') && (ch <='z')  )
-                    moves[pos2y][pos2x]=1;
+                if( (ch>='a') && (ch <='z')  ) {
+                    if(pos2y==0)
+                        moves[pos2y][pos2x] = 3; // 3 denotes promotion spacial case
+                    else
+                        moves[pos2y][pos2x] = 1;
+
+                }
             }
         }
         else
@@ -408,12 +605,7 @@ class Pawn extends piece{
                 int pos1x=x;
                 int pos1y=y+1;
                 moves[pos1y][pos1x]=1;
-                if(board[y+2][x]=='.' && forpawn == true)
-                {
-                    int pos2x=x;
-                    int pos2y=y+2;
-                    moves[pos2y][pos2x]=1;
-                }
+
             }
             // apply code for op passent
             if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0))
@@ -422,8 +614,12 @@ class Pawn extends piece{
                 int pos1x=x+1;
                 int pos1y=y+1;
                 char ch= board[pos1y][pos1x];
-                if( (ch>='A') && (ch <='Z')  )
-                    moves[pos1y][pos1x]=1;
+                if( (ch>='A') && (ch <='Z')  ){
+                    if(pos1y==7)
+                        moves[pos1y][pos1x] = 3; // 3 denotes promotion spacial case
+                    else
+                        moves[pos1y][pos1x] = 1;
+                }
 
             }
             if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0))
@@ -432,8 +628,13 @@ class Pawn extends piece{
                 int pos2x=x-1;
                 int pos2y=y+1;
                 char ch=board[pos2y][pos2x];
-                if( (ch>='A') && (ch <='Z')  )
-                    moves[pos2y][pos2x]=1;
+                if( (ch>='A') && (ch <='Z')  ){
+                    if(pos2y==7)
+                        moves[pos2y][pos2x] = 3; // 3 denotes promotion spacial case
+                    else
+                        moves[pos2y][pos2x] = 1;
+
+                }
 
             }
         }

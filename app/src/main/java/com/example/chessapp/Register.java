@@ -4,6 +4,7 @@ package com.example.chessapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,13 +35,13 @@ public class Register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_signup);
         mAuth= FirebaseAuth.getInstance();
-        username = findViewById(R.id.newemail);
-        password1 = findViewById(R.id.password1);
-        password2 = findViewById(R.id.password2);
-        signup= findViewById(R.id.button);
-        name = findViewById(R.id.newusername);
+        username = findViewById(R.id.editTextTextEmailAddress2);
+        password1 = findViewById(R.id.editTextTextPassword2);
+        password2 = findViewById(R.id.editTextTextPassword3);
+        signup= findViewById(R.id.button3);
+        name = findViewById(R.id.username);
         database = FirebaseDatabase.getInstance();
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,11 +114,14 @@ public class Register extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String userID= mAuth.getCurrentUser().getUid();
                             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-                            User newuser = new User(newusername,"NOGAMENOW",true,true);
+                            User newuser = new User(newusername,"NOFENNOW",true,true,email,password,0,0,0);
                             myRef.child("users").child(newusername).setValue(newuser);
                             myRef.child("config").child(userID).setValue(newusername);
-
+                            Challenge c = new Challenge("NOchallenge","no","no","no");
+                            myRef.child("users").child(newusername).child("challengers").setValue(c);
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                             Toast.makeText(getApplicationContext(), " Registred Succesfully ", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
                             // Sign in success, update UI with the signed-in user's information
 
                         } else {

@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +20,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class GameScreen extends AppCompatActivity {
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
-    TextView turntextview ,mynameview,opponantnameview;
+public class gametryscreen extends AppCompatActivity {
+
+    TextView turntextview ,mynameview,opponantnameview,mytime,opponanttime;
     int [][] legalMoves = new int[8][8];
     int i=0,j=0;
+
+    int ctime,otime;
     String myname,opponantname="mahitnahi";
     int activeplayer ; // 1-->white to play ,   0-->black to play
     // find a way to intialize it before starting the game ;
@@ -32,18 +39,26 @@ public class GameScreen extends AppCompatActivity {
     ImageView lastview;
     boolean lasttap=false;
     boolean allowmove ;
+    boolean firstmove ;
+    boolean promotion;
+    int plasti=-1,plastj=-1;
+    int pi=-1,pj=-1;
+
+    CountDownTimer ct=null,ot=null; // ct --> challenger time ot --> opponant time
+
     DatabaseReference ref ;
     char[][] board = {
+
             //   '0','1','2','3','4','5','6','7'
-            {'r','n','b','q','k','b','n','r'},// 0
-            {'p','p','p','p','p','p','p','p'},// 1
-            {'.','.','.','.','.','.','.','.'},// 2
-            {'.','.','.','.','.','.','.','.'},// 3
-            {'.','.','.','.','.','.','.','.'},// 4
-            {'.','.','.','.','.','.','.','.'},// 5
-            {'P','P','P','P','P','P','P','P'},// 6
-            {'R','N','B','Q','K','B','N','R'},// 7
-    };
+                {'r','n','b','q','k','b','n','r'},// 0
+                {'p','p','p','p','p','p','p','p'},// 1
+                {'.','.','.','.','.','.','.','.'},// 2
+                {'.','.','.','.','.','.','.','.'},// 3
+                {'.','.','.','.','.','.','.','.'},// 4
+                {'.','.','.','.','.','.','.','.'},// 5
+                {'P','P','P','P','P','P','P','P'},// 6
+                {'R','N','B','Q','K','B','N','R'},// 7
+        };
     Chess ch = new Chess();
 
 
@@ -53,24 +68,27 @@ public class GameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        promotion = true;
+        firstmove = false;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_screen);
+        setContentView(R.layout.gametryscreen);
         activeplayer = getIntent().getExtras().getInt("activeplayer");
         myname = getIntent().getExtras().getString("myname");
         // take the value of activeplayer from intent or other ideas.
         String gamelink = getIntent().getExtras().getString("link");
         ref = FirebaseDatabase.getInstance().getReference().child("games").child(gamelink);
 
-        mynameview = (TextView)findViewById(R.id.saymynametextview);
+        mynameview = (TextView)findViewById(R.id.mynametextview);
         mynameview.setText(myname);
 
-        opponantnameview = (TextView)findViewById(R.id.oppponantusername);
+        opponantnameview = (TextView)findViewById(R.id.opponantnametextview);
 
-
+        mytime = (TextView) findViewById(R.id.mytime);
+        opponanttime = (TextView) findViewById(R.id.opponanttime);
 
         Toast.makeText(getApplicationContext(), "game link is : " + gamelink , Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), "activeplayer is : " + activeplayer , Toast.LENGTH_SHORT).show();
-        turntextview = (TextView)findViewById(R.id.turn);
+        turntextview = (TextView)findViewById(R.id.whoseturn);
         if(activeplayer==1){
             String FEN = whiteboardtoFEN();
             Game game = new Game(FEN,myname,"mahitnahi",0,0,1);
@@ -86,7 +104,7 @@ public class GameScreen extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                Toast.makeText(GameScreen.this, "Onchange called ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Onchange called ", Toast.LENGTH_SHORT).show();
                 Game game = dataSnapshot.getValue(Game.class);
 
                 if(activeplayer==1 && game.getOpponant()!=opponantname)
@@ -118,7 +136,7 @@ public class GameScreen extends AppCompatActivity {
                         FENtoblackboard(board,FEN);
 
                     if(activeplayer == turn )
-                            allowmove = true;
+                        allowmove = true;
                     else
                         allowmove = false ;
 
@@ -146,8 +164,99 @@ public class GameScreen extends AppCompatActivity {
                     }
                     // rethink on this logic
 
+                    int challengertimer = game.getChalengerTimer();
+                    ctime = challengertimer;
+                    if(challengertimer<0)
+                    {
+                        // dont to anything
+                    }
+                    else if(challengertimer >0)
+                    {
+                        if(turn == 1){
+                                if(ct != null) {
+                                    ct.cancel();
+                                }
+                                    ct = new CountDownTimer(challengertimer, 1000) {
+                                public void onTick(long millisUntilFinished) {
+                                    // Used for formatting digit to be in 2 digits only
+                                    NumberFormat f = new DecimalFormat("00");
+                                    long hour = (millisUntilFinished / 3600000) % 24;
+                                    long min = (millisUntilFinished / 60000) % 60;
+                                    long sec = (millisUntilFinished / 1000) % 60;
+                                    ctime--;
+                                    if(activeplayer==1)
+                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                                    else
+                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                                }
+                                // When the task is over it will print 00:00:00 there
+                                public void onFinish() {
+                                    if(activeplayer==1)
+                                        mytime.setText("00:00:00");
+                                    else
+                                        opponanttime.setText("00:00:00");
+                                }
+                            }.start();
+
+                        }
+                        else{
+                            NumberFormat f = new DecimalFormat("00");
+                            long hour = (challengertimer / 3600000) % 24;
+                            long min = (challengertimer / 60000) % 60;
+                            long sec = (challengertimer / 1000) % 60;
+                            if(activeplayer==1)
+                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                            else
+                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+
+                        }
 
 
+                    }
+                    int opponanattimer = game.getOpponantTimer();
+                    otime = opponanattimer;
+                    if(opponanattimer<0)
+                    {
+                        // dont to anything
+                    }
+                    else if(opponanattimer >0)
+                    {
+                        if(turn == 0){
+                                if(ot != null)
+                                    ot.cancel();
+                                ot = new CountDownTimer(opponanattimer, 1000) {
+                                public void onTick(long millisUntilFinished) {
+                                    // Used for formatting digit to be in 2 digits only
+                                    NumberFormat f = new DecimalFormat("00");
+                                    long hour = (millisUntilFinished / 3600000) % 24;
+                                    long min = (millisUntilFinished / 60000) % 60;
+                                    long sec = (millisUntilFinished / 1000) % 60;
+                                    otime--;
+                                    if(activeplayer==1)
+                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                                    else
+                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                                }
+                                // When the task is over it will print 00:00:00 there
+                                public void onFinish() {
+                                    if(activeplayer==1)
+                                        opponanttime.setText("00:00:00");
+                                    else
+                                        mytime.setText("00:00:00");
+                                }
+                            }.start();
+                        }
+                        else{
+                            NumberFormat f = new DecimalFormat("00");
+                            long hour = (challengertimer / 3600000) % 24;
+                            long min = (challengertimer / 60000) % 60;
+                            long sec = (challengertimer / 1000) % 60;
+                            if(activeplayer==1)
+                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                            else
+                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+                        }
+                    }
                 }
                 else
                 {
@@ -165,6 +274,11 @@ public class GameScreen extends AppCompatActivity {
             }
         };
         ref.addValueEventListener(FENlistner);
+    }
+
+
+    void settc(){
+
     }
 
 
@@ -883,7 +997,10 @@ public class GameScreen extends AppCompatActivity {
         if(i==-1 || j ==-1 )
             return;
         ImageView sq= giveimageview(i,j);
-        putpurpinview(board[i][j],sq);
+        if(activeplayer==1)
+            putpurpinview(board[i][j],sq);
+        if(activeplayer==0)
+            putpurpinviewforblack(board[i][j],sq);
         for(int u=0;u<8;u++) {
             for(int v=0;v<8;v++){
                 if(legalMoves[u][v]==1){
@@ -893,6 +1010,10 @@ public class GameScreen extends AppCompatActivity {
                     if(activeplayer==0)
                         putpurpinviewforblack(board[u][v],square);
                 }
+                else if (legalMoves[u][v]>0){
+                    ImageView square= giveimageview(u,v);
+                    square.setImageResource(R.drawable.green);
+                }
             }
         }
     }
@@ -901,12 +1022,18 @@ public class GameScreen extends AppCompatActivity {
         if(i==-1 || j ==-1 )
             return;
         ImageView sq= giveimageview(i,j);
-        putinview(board[i][j],sq);
+        if(activeplayer==1)
+            putinview(board[i][j],sq);
+        if(activeplayer==0)
+            putinviewforblack(board[i][j],sq);
         for(int u=0;u<8;u++) {
             for(int v=0;v<8;v++){
                 if(legalMoves[u][v]==1){
                     ImageView square= giveimageview(u,v);
-                    putinview(board[u][v],square);
+                    if(activeplayer==1)
+                        putinview(board[u][v],square);
+                    if(activeplayer==0)
+                        putinviewforblack(board[u][v],square);
                     legalMoves[u][v]=0;
                 }
             }
@@ -957,6 +1084,37 @@ public class GameScreen extends AppCompatActivity {
         }
     }
 
+    // complete it sometime later
+    public void promot(View v){
+        if(promotion== false){
+
+            Toast.makeText(this, "No Promotion Allwed", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ImageView iv = (ImageView)v;
+        String s = (iv.getTag().toString());
+        if(s=="N"){
+            ch.promotionmove(plasti,plastj,pi,pj,'N',board);
+            plastj=plasti=pi=pj=-1;
+            promotion = false;
+        }
+        else if(s=="B"){
+            ch.promotionmove(plasti,plastj,pi,pj,'B',board);
+            plastj=plasti=pi=pj=-1;
+            promotion = false;
+        }
+        else if(s=="R"){
+            ch.promotionmove(plasti,plastj,pi,pj,'R',board);
+            plastj=plasti=pi=pj=-1;
+            promotion = false;
+        }
+        else if(s=="Q"){
+            ch.promotionmove(plasti,plastj,pi,pj,'Q',board);
+            plastj=plasti=pi=pj=-1;
+            promotion = false;
+        }
+    }
+
 
 
     public void tap(View v)
@@ -969,9 +1127,19 @@ public class GameScreen extends AppCompatActivity {
         int i=geti(a),j=getj(a) ;// extract from android tag if A1 then 7,0;
         if(i==-1 || j==-1)
             ;// kahi tri gandlay
-        if(lasttap && legalMoves[i][j]==1)
+        if(lasttap && legalMoves[i][j]>0)
         {
-            ch.makeMove(lasti,lastj,i,j,board);
+            if(legalMoves[i][j]==1)
+                ch.makeMove(lasti,lastj,i,j,board);
+            else if(legalMoves[i][j]==2)
+                ch.castlinemove(lasti,lastj,i,j,board);
+            if(legalMoves[i][j]==3){
+                // show UI for promotion
+                promotion = true;
+                LinearLayout promotionbar = (LinearLayout)findViewById(R.id.promotionbar);
+                //promotionbar.setVisibility(View.VISIBLE);
+                pi = i;pj=j;plasti = lasti;plastj=lastj;
+            }
             //unmarkvalidmoves(lasti,lastj);
             //call make move function
             // make the move
@@ -985,22 +1153,47 @@ public class GameScreen extends AppCompatActivity {
 
             if(activeplayer==1){
                 String FEN = whiteboardtoFEN();
-                Game game = new Game(FEN,myname,opponantname,0,0,0);
-                ref.setValue(game);
+                if(ct!=null)
+                    ct.cancel();
+                if(ot!=null)
+                    ot.cancel();
+                if(firstmove==false) {
+                    firstmove = true;
+                    Game game = new Game(FEN, myname, opponantname, 900000, -1, 0);
+                    ref.setValue(game);
+                }
+                else{
+
+                    Game game = new Game(FEN, myname, opponantname, ctime, otime, 0);
+                    ref.setValue(game);
+                }
+
                 // write in Realtime - database
             }
             else if(activeplayer==0){
+                if(ct!=null)
+                    ct.cancel();
+                if(ot!=null)
+                    ot.cancel();
                 String FEN = blackboardtoFEN();
-                Game game = new Game(FEN,opponantname,myname,0,0,1);
-                ref.setValue(game);
+                if(firstmove == false){
+                    firstmove = true;
+                    Game game = new Game(FEN,opponantname,myname,ctime,900000,1);
 
+                    ref.setValue(game);
+                }
+                else{
+                    Game game = new Game(FEN,opponantname,myname,ctime,otime,1);
+                    ref.setValue(game);
+
+                }
                 // write in Realtime - database
             }
             lasttap=false;
             if(ch.isCheck(board, 0))
             {
                 if(ch.ismate(board, 0)) {
-                    TextView t = (TextView)findViewById(R.id.chessboard);
+                    TextView t = (TextView)findViewById(R.id.textView13);
                     String op = "You Won The GAME !!!!";
                     t.setText(op);
                     ;// show that active player has lost and make the restart game button visible
@@ -1014,7 +1207,7 @@ public class GameScreen extends AppCompatActivity {
             if(ch.allpeices[i][j]!=null){
                 if(ch.allpeices[i][j].getColor()==1)
                 {
-                    //unmarkvalidmoves(lasti,lastj);
+                    unmarkvalidmoves(lasti,lastj);
                     ch.validMoves(board, legalMoves, i, j);
                     lasti=i;
                     lastj=j;

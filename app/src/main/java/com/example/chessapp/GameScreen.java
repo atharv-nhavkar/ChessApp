@@ -73,7 +73,7 @@ public class GameScreen extends AppCompatActivity {
         turntextview = (TextView)findViewById(R.id.turn);
         if(activeplayer==1){
             String FEN = whiteboardtoFEN();
-            Game game = new Game(FEN,myname,"mahitnahi",0,0,1);
+            Game game = new Game(FEN,myname,"mahitnahi",0,0,false,false,1);
             ref.setValue(game);
             allowmove = true;
 
@@ -985,13 +985,13 @@ public class GameScreen extends AppCompatActivity {
 
             if(activeplayer==1){
                 String FEN = whiteboardtoFEN();
-                Game game = new Game(FEN,myname,opponantname,0,0,0);
+                Game game = new Game(FEN,myname,opponantname,0,0,false,false,0);
                 ref.setValue(game);
                 // write in Realtime - database
             }
             else if(activeplayer==0){
                 String FEN = blackboardtoFEN();
-                Game game = new Game(FEN,opponantname,myname,0,0,1);
+                Game game = new Game(FEN,opponantname,myname,0,0,false,false,1);
                 ref.setValue(game);
 
                 // write in Realtime - database

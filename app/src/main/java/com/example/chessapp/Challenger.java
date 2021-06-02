@@ -3,6 +3,7 @@ package com.example.chessapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -96,8 +97,12 @@ public class Challenger extends AppCompatActivity {
                     sendIntent.putExtra(Intent.EXTRA_TEXT, key);
                     sendIntent.setType("text/plain");
 
-                    Intent shareIntent = Intent.createChooser(sendIntent, null);
-                    startActivity(shareIntent);
+                    try {
+                        startActivity(sendIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(Challenger.this, "Cant call explicit intent "+ e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        // Define what your app should do if no activity can handle the intent.
+                    }
 
                     // external Intent calling
                 }
@@ -132,7 +137,7 @@ public class Challenger extends AppCompatActivity {
                 String opponantName = opponantname.getText().toString();
                 if(opponantName.isEmpty()) {
                     Toast.makeText(getApplicationContext(), " Write a Name please  ", Toast.LENGTH_SHORT).show();
-                    Game game = new Game("NOTYET",name,"mahitnai",0,0,1);
+                    Game game = new Game("NOTYET",name,"mahitnai",0,0,false,false,1);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("games");
                     String key = ref.push().getKey();
                     ref.child(key).setValue(game);
@@ -150,7 +155,7 @@ public class Challenger extends AppCompatActivity {
                     // check if ebtred playere exixts or not here
 
                     // code to be writtened
-                    Game game = new Game("NOTYET",name,"mahitnai",0,0,1);
+                    Game game = new Game("NOTYET",name,"mahitnai",0,0,false,false,1);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("games");
                     String key = ref.push().getKey();
                     ref.child(key).setValue(game);

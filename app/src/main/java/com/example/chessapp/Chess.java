@@ -364,15 +364,17 @@ class Chess {
                     board[u][v]=prevCharatuv;
                     legalMoves[u][v]=0;
                 }
-                allpeices[i][j]=prevPeiceatij;
-                if(allpeices[i][j]!=null)
-                    allpeices[i][j].set(j,i,color);
-                allpeices[u][v]=prevPeiceatuv;
-                if(allpeices[u][v]!=null)
-                    allpeices[u][v].set(v,u,allpeices[u][v].getColor());
-                board[i][j]=prevCharatij;
-                board[u][v]=prevCharatuv;
-
+                else {
+                    legalMoves[u][v]=1;
+                    allpeices[i][j] = prevPeiceatij;
+                    if (allpeices[i][j] != null)
+                        allpeices[i][j].set(j, i, color);
+                    allpeices[u][v] = prevPeiceatuv;
+                    if (allpeices[u][v] != null)
+                        allpeices[u][v].set(v, u, allpeices[u][v].getColor());
+                    board[i][j] = prevCharatij;
+                    board[u][v] = prevCharatuv;
+                }
             }
         }
 
@@ -400,15 +402,17 @@ class Chess {
                     board[u][v]=prevCharatuv;
                     legalMoves[u][v]=0;
                 }
-                allpeices[i][j]=prevPeiceatij;
-                if(allpeices[i][j]!=null)
-                    allpeices[i][j].set(j,i,color);
-                allpeices[u][v]=prevPeiceatuv;
-                if(allpeices[u][v]!=null)
-                    allpeices[u][v].set(v,u,allpeices[u][v].getColor());
-                board[i][j]=prevCharatij;
-                board[u][v]=prevCharatuv;
-
+                else {
+                    legalMoves[u][v]=1;
+                    allpeices[i][j] = prevPeiceatij;
+                    if (allpeices[i][j] != null)
+                        allpeices[i][j].set(j, i, color);
+                    allpeices[u][v] = prevPeiceatuv;
+                    if (allpeices[u][v] != null)
+                        allpeices[u][v].set(v, u, allpeices[u][v].getColor());
+                    board[i][j] = prevCharatij;
+                    board[u][v] = prevCharatuv;
+                }
             }
         }
 

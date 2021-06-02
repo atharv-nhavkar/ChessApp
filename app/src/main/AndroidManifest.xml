@@ -13,9 +13,8 @@
         <activity android:name=".Challenger" />
         <activity android:name=".After_login" />
         <activity android:name=".GameScreen" />
-        <activity android:name=".Register">
-            android:parentActivityName=".MainActivity">
-        </activity>
+        <activity android:name=".Register"/>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

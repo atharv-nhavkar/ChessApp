@@ -6,6 +6,24 @@ public class Game {
     String Opponant;
     int ChalengerTimer;
     int OpponantTimer;
+    boolean drawn;
+    boolean free;
+
+    public boolean isFree() {
+        return free;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
+    }
+
+    public boolean isDrawn() {
+        return drawn;
+    }
+
+    public void setDrawn(boolean drawn) {
+        this.drawn = drawn;
+    }
 
     public String getChalleger() {
         return challeger;
@@ -57,16 +75,17 @@ public class Game {
         this.turn = turn;
     }
 
-
-
-    public Game(String FEN, String challeger, String opponant, int chalengerTimer, int opponantTimer, int turn) {
+    public Game(String FEN, String challeger, String opponant, int chalengerTimer, int opponantTimer, boolean drawn, boolean free, int turn) {
         this.FEN = FEN;
         this.challeger = challeger;
         Opponant = opponant;
         ChalengerTimer = chalengerTimer;
         OpponantTimer = opponantTimer;
+        this.drawn = drawn;
+        this.free = free;
         this.turn = turn;
     }
+
 
     public Game() {
             // aise hi sexy lag raha tha

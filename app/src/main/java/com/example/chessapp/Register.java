@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -119,7 +117,7 @@ public class Register extends AppCompatActivity {
                             myRef.child("config").child(userID).setValue(newusername);
                             Challenge c = new Challenge("NOchallenge","no","no","no");
                             myRef.child("users").child(newusername).child("challengers").setValue(c);
-                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             Toast.makeText(getApplicationContext(), " Registred Succesfully ", Toast.LENGTH_SHORT).show();
                             startActivity(intent);
                             // Sign in success, update UI with the signed-in user's information

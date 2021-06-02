@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="0.5"
+    android:background="@drawable/boardbackground02"
     android:orientation="vertical">
 
     <LinearLayout
@@ -18,23 +19,27 @@
             android:layout_width="match_parent"
 
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_weight="1" />
+
         <TextView
             android:id="@+id/whoseturn"
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_weight="0.25"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:text="White To Play"
+            android:textColor="#FF5722"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:id="@+id/promotionbar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:visibility="invisible"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
 
             <ImageView
@@ -44,27 +49,30 @@
                 android:layout_weight="1"
                 android:onClick="promot"
                 app:srcCompat="@drawable/wknight" />
+
             <ImageView
                 android:id="@+id/B"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/wbishop"
-                android:onClick="promot"/>
+                android:onClick="promot"
+                app:srcCompat="@drawable/wbishop" />
+
             <ImageView
                 android:id="@+id/R"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/wrook"
-                android:onClick="promot"/>
+                android:onClick="promot"
+                app:srcCompat="@drawable/wrook" />
+
             <ImageView
                 android:id="@+id/Q"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/wqueen"
-                android:onClick="promot"/>
+                android:onClick="promot"
+                app:srcCompat="@drawable/wqueen" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,18 +80,32 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/opponantnametextview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+
+                android:fontFamily="@font/aclonica"
+                android:gravity="center_vertical"
+                android:padding="5dp"
+                android:text="player1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#FFEB3B"
+                android:textColorLink="#FFC107"
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/opponanttime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="TextView" />
+                android:gravity="center_horizontal|center_vertical"
+                android:text="00:00:00"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -93,7 +115,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="0dp"
         android:layout_weight="2"
-        android:background="@drawable/cboard"
+        android:background="@drawable/newboardwhite"
         android:orientation="vertical">
 
         <LinearLayout
@@ -704,25 +726,36 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
 
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/mynametextview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:fontFamily="@font/aclonica"
+                android:padding="5dp"
+                android:text="player2"
+                android:textColor="#FFEB3B"
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/mytime"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="TextView" />
+                android:gravity="center_horizontal|center_vertical"
+                android:text="00:00:00"
+                android:textColor="#FFFFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
@@ -730,15 +763,8 @@
             android:layout_width="match_parent"
 
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
-        <TextView
-            android:id="@+id/timepass2"
-            android:layout_width="match_parent"
+            android:layout_weight="1" />
 
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
 
 
     </LinearLayout>

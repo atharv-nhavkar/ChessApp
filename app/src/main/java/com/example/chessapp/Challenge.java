@@ -1,10 +1,19 @@
 package com.example.chessapp;
 
 public class Challenge {
+    String key;
     String link;
     String Challenger;
     String OpponentName;
     String TimeControl;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getLink() {
         return link;
@@ -42,10 +51,13 @@ public class Challenge {
 
     }
 
-    public Challenge(String link, String challenger, String opponentName, String timeControl) {
+    public Challenge(String key, String link, String challenger, String opponentName, String timeControl) {
+        this.key = key;
         this.link = link;
         Challenger = challenger;
         OpponentName = opponentName;
         TimeControl = timeControl;
     }
+
+
 }

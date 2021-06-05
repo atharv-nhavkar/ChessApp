@@ -458,6 +458,60 @@ class Chess {
             allpeices[u][v]=new Queen(v,u,allpeices[i][j].getColor());
         allpeices[i][j]=null;
     }
+
+
+    public String castlingrights(char [][] board){
+        String opstr="";
+        if(board[7][4]=='K'){
+            int[][] boardControl = new int [8][8];
+            for(int u=0;u<8;u++)
+            {
+                for(int v=0;v<8;v++)
+                {
+                    if(allpeices[u][v]==null)
+                        continue;
+                    if(allpeices[u][v].getColor()==0)
+                    {
+                        allpeices[u][v].getControlledSquares(board, boardControl);
+                    }
+                }
+            }
+            int i=0,j=4;
+            if(board[i][j+1]=='.' && board[i][j+2]=='.' && boardControl[i][j+1]==0 && boardControl[i][j+2]==0 && board[i][7]=='r' ){
+                opstr+= "K"; // castling special case
+            }
+            if(board[i][j-1]=='.' && board[i][j-2]=='.' && board[i][j-3]=='.' && boardControl[i][j-1]==0 && boardControl[i][j-2]==0 && boardControl[i][j-3]==0 && board[i][0]=='r'){
+                opstr+= "Q"; // castling special case
+            }
+        }
+
+        if(board[0][4]=='k'){
+            int[][] boardControl = new int [8][8];
+            for(int u=0;u<8;u++)
+            {
+                for(int v=0;v<8;v++)
+                {
+                    if(allpeices[u][v]==null)
+                        continue;
+                    if(allpeices[u][v].getColor()==1)
+                    {
+                        allpeices[u][v].getControlledSquares(board, boardControl);
+                    }
+                }
+            }
+            int i=0,j=4;
+            if(board[i][j+1]=='.' && board[i][j+2]=='.' && boardControl[i][j+1]==0 && boardControl[i][j+2]==0 && board[i][7]=='r' ){
+               opstr+= "k"; // castling special case
+            }
+            if(board[i][j-1]=='.' && board[i][j-2]=='.' && board[i][j-3]=='.' && boardControl[i][j-1]==0 && boardControl[i][j-2]==0 && boardControl[i][j-3]==0 && board[i][0]=='r'){
+                opstr+= "q"; // castling special case
+            }
+
+        }
+        if(opstr=="")
+            opstr= "-";
+        return opstr;
+    }
 }
 
 
@@ -531,13 +585,13 @@ abstract class piece{
 
 class Pawn extends piece{
 
-    public boolean virgin=true;
+
 
     public void setPawn(int x,int y,int color){
         this.x=x;
         this.y=y;
         this.color=color;
-        virgin=true;
+
     }
 
     public Pawn(int x,int y,int color){
@@ -547,7 +601,7 @@ class Pawn extends piece{
     }
 
     public  void firstmove(){
-        virgin = false;
+
     }
 
 

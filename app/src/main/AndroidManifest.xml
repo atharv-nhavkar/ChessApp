@@ -9,12 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChessApp">
-        <activity android:name=".new_login"></activity>
+        <activity android:name=".CardView"></activity>
+        <activity android:name=".APItrial" />
+        <activity android:name=".new_login" />
         <activity android:name=".Challenger" />
         <activity android:name=".After_login" />
         <activity android:name=".GameScreen" />
-        <activity android:name=".Register"/>
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".Register" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

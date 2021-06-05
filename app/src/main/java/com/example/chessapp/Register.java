@@ -115,8 +115,9 @@ public class Register extends AppCompatActivity {
                             User newuser = new User(newusername,"NOFENNOW",true,true,email,password,0,0,0);
                             myRef.child("users").child(newusername).setValue(newuser);
                             myRef.child("config").child(userID).setValue(newusername);
-                            Challenge c = new Challenge("NOchallenge","no","no","no");
-                            myRef.child("users").child(newusername).child("challengers").setValue(c);
+                            String key = myRef.child("users").child(newusername).child("challengers").push().getKey();
+                            Challenge c = new Challenge(key,"NOchallenge","no","no","no");
+                            myRef.child("users").child(newusername).child("challengers").child(key).setValue(c);
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             Toast.makeText(getApplicationContext(), " Registred Succesfully ", Toast.LENGTH_SHORT).show();
                             startActivity(intent);

@@ -4,10 +4,26 @@ public class Game {
     String FEN ;
     String challeger;
     String Opponant;
+
     int ChalengerTimer;
     int OpponantTimer;
+    int offer;
+    // 0--> dafult
+    // 1--> white resigns
+    // 2 --> black resigns
+    // 3--> white offers draw
+    // 4--> black offers draw
     boolean drawn;
     boolean free;
+
+
+    public int getOffer() {
+        return offer;
+    }
+
+    public void setOffer(int offer) {
+        this.offer = offer;
+    }
 
     public boolean isFree() {
         return free;
@@ -75,16 +91,18 @@ public class Game {
         this.turn = turn;
     }
 
-    public Game(String FEN, String challeger, String opponant, int chalengerTimer, int opponantTimer, boolean drawn, boolean free, int turn) {
+    public Game(String FEN, String challeger, String opponant, int chalengerTimer, int opponantTimer, int offer, boolean drawn, boolean free, int turn) {
         this.FEN = FEN;
         this.challeger = challeger;
         Opponant = opponant;
         ChalengerTimer = chalengerTimer;
         OpponantTimer = opponantTimer;
+        this.offer = offer;
         this.drawn = drawn;
         this.free = free;
         this.turn = turn;
     }
+
 
 
     public Game() {

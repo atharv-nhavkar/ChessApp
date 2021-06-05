@@ -39,6 +39,7 @@
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_weight="0.25"
         android:layout_height="0dp"
@@ -82,13 +83,13 @@
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
-        android:layout_weight="0.1"
+        android:layout_weight="0.07"
         android:layout_height="0dp"
         android:layout_marginLeft="150dp"
         android:layout_marginTop="5dp"
-        android:text="---OR---"
+        android:text="OR"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="17sp" />
 
     <Button
         android:id="@+id/button2"

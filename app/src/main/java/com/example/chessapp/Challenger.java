@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class Challenger extends AppCompatActivity {
     TextView challengelink1;
     Button challengelink2;
     TextView currentusername;
-    Button challenge,accept;
+    Button challenge,accept,trial;
 
     ListView challengesview ;
 
@@ -48,11 +49,16 @@ public class Challenger extends AppCompatActivity {
         String name = getIntent().getExtras().getString("username");
 
         allchallenges = new ArrayList<Challenge>(7);
+        CustomAdapter adapter = new CustomAdapter(this,allchallenges,name);
+        challengesview = findViewById(R.id.challengesview);
+        challengesview.setAdapter(adapter);
 
         Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
 
+        //trial = (Button)findViewById(R.id.trial);
         challengesview = findViewById(R.id.challengesview);
         currentusername = (TextView)findViewById(R.id.currentusername);
+        currentusername.setText(name);
         opponantname = (EditText) findViewById(R.id.editTextTextPersonName2);
         challengelink1 = (TextView) findViewById(R.id.textView7);
         challengelink2 = (Button) findViewById(R.id.button3);
@@ -84,6 +90,14 @@ public class Challenger extends AppCompatActivity {
 //        String s = currentusername.getText().toString();
 //        userref = FirebaseDatabase.getInstance().getReference().child("users").child(s).child("challengers");
 
+
+//        trial.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(Challenger.this,APItrial.class);
+//                startActivity(intent);
+//            }
+//        });
 
         challengelink1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +151,7 @@ public class Challenger extends AppCompatActivity {
                 String opponantName = opponantname.getText().toString();
                 if(opponantName.isEmpty()) {
                     Toast.makeText(getApplicationContext(), " Write a Name please  ", Toast.LENGTH_SHORT).show();
-                    Game game = new Game("NOTYET",name,"mahitnai",0,0,false,false,1);
+                    Game game = new Game("NOTYET",name,"mahitnai",0,0,0,false,false,1);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("games");
                     String key = ref.push().getKey();
                     ref.child(key).setValue(game);
@@ -155,15 +169,16 @@ public class Challenger extends AppCompatActivity {
                     // check if ebtred playere exixts or not here
 
                     // code to be writtened
-                    Game game = new Game("NOTYET",name,"mahitnai",0,0,false,false,1);
+                    Game game = new Game("NOTYET",name,"mahitnai",0,0,0,false,false,1);
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("games");
                     String key = ref.push().getKey();
                     ref.child(key).setValue(game);
 
 
                     DatabaseReference opponentref = FirebaseDatabase.getInstance().getReference().child("users").child(opponantName).child("challengers");
-                    Challenge challenge = new Challenge(key,name,opponantName,"Classic");
-                    opponentref.push().setValue(challenge);
+                    String refkey = opponentref.push().getKey();
+                    Challenge challenge = new Challenge(refkey,key,name,opponantName,"Classic");
+                    opponentref.child(refkey).setValue(challenge);
                     Intent intent = new Intent(getApplicationContext(), gametryscreen.class);
                     intent.putExtra("activeplayer", 1);
                     intent.putExtra("link", key);
@@ -264,31 +279,38 @@ public class Challenger extends AppCompatActivity {
         // LATEEST COMMENTED CODE
 
 
-//        userref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange (@NonNull DataSnapshot snapshot){
-//
-//                for (DataSnapshot it : snapshot.getChildren()) {
-//
-//                    Challenge c = it.getValue(Challenge.class);
-//
-//                    allchallenges.add(c);
-//                }
-//
-//                ArrayAdapter<Challenge> arrayAdapter=new ArrayAdapter<Challenge>(getApplicationContext(), android.R.layout.simple_list_item_1,allchallenges);
-//                CustomAdapter customAdapter=new CustomAdapter(getApplicationContext(),allchallenges);
-//                challengesview.setAdapter(customAdapter);
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled (@NonNull DatabaseError error){
-//
-//            }
-//
-//        });
+        userref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange (@NonNull DataSnapshot snapshot){
+                allchallenges.clear();
+
+                for (DataSnapshot it : snapshot.getChildren()) {
+
+
+                    //String s = it.getValue(String.class);
+
+                    //currentusername.setText(s);
+
+                    Challenge c = it.getValue(Challenge.class);
+
+                    allchallenges.add(c);
+                    Toast.makeText(Challenger.this, c.getChallenger(), Toast.LENGTH_SHORT).show();
+                }
+
+                CustomAdapter adapter = new CustomAdapter(getApplicationContext(),allchallenges,name);
+                challengesview = findViewById(R.id.challengesview);
+                challengesview.setAdapter(adapter);
+
+
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError error){
+                Toast.makeText(Challenger.this, " Database Error", Toast.LENGTH_SHORT).show();
+                Log.d("Database Error",error.getMessage().toString());
+            }
+
+        });
 
 
 

@@ -35,15 +35,16 @@ public class GameScreen extends AppCompatActivity {
     DatabaseReference ref ;
     char[][] board = {
             //   '0','1','2','3','4','5','6','7'
-            {'r','n','b','q','k','b','n','r'},// 0
-            {'p','p','p','p','p','p','p','p'},// 1
-            {'.','.','.','.','.','.','.','.'},// 2
-            {'.','.','.','.','.','.','.','.'},// 3
-            {'.','.','.','.','.','.','.','.'},// 4
-            {'.','.','.','.','.','.','.','.'},// 5
-            {'P','P','P','P','P','P','P','P'},// 6
-            {'R','N','B','Q','K','B','N','R'},// 7
-    };
+                {'r','n','b','q','k','b','n','r'},// 0
+                {'p','p','p','p','p','p','p','p'},// 1
+                {'.','.','.','.','.','.','.','.'},// 2
+                {'.','.','.','.','.','.','.','.'},// 3
+                {'.','.','.','.','.','.','.','.'},// 4
+                {'.','.','.','.','.','.','.','.'},// 5
+                {'P','P','P','P','P','P','P','P'},// 6
+                {'R','N','B','Q','K','B','N','R'},// 7
+        };
+
     Chess ch = new Chess();
 
 
@@ -73,7 +74,7 @@ public class GameScreen extends AppCompatActivity {
         turntextview = (TextView)findViewById(R.id.turn);
         if(activeplayer==1){
             String FEN = whiteboardtoFEN();
-            Game game = new Game(FEN,myname,"mahitnahi",0,0,false,false,1);
+            Game game = new Game(FEN,myname,"mahitnahi",0,0,0,false,false,1);
             ref.setValue(game);
             allowmove = true;
 
@@ -985,13 +986,13 @@ public class GameScreen extends AppCompatActivity {
 
             if(activeplayer==1){
                 String FEN = whiteboardtoFEN();
-                Game game = new Game(FEN,myname,opponantname,0,0,false,false,0);
+                Game game = new Game(FEN,myname,opponantname,0,0,0,false,false,0);
                 ref.setValue(game);
                 // write in Realtime - database
             }
             else if(activeplayer==0){
                 String FEN = blackboardtoFEN();
-                Game game = new Game(FEN,opponantname,myname,0,0,false,false,1);
+                Game game = new Game(FEN,opponantname,myname,0,0,0,false,false,1);
                 ref.setValue(game);
 
                 // write in Realtime - database

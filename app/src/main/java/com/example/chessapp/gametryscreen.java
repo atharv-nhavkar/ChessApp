@@ -27,6 +27,11 @@ import java.util.Map;
 
 public class gametryscreen extends AppCompatActivity {
 
+
+    ImageView drawoffer,drawaccept ,resign;
+    int offer;
+
+
     TextView turntextview ,mynameview,opponantnameview,mytime,opponanttime;
     int [][] legalMoves = new int[8][8];
     int i=0,j=0;
@@ -46,6 +51,7 @@ public class gametryscreen extends AppCompatActivity {
     int plasti=-1,plastj=-1;
     int pi=-1,pj=-1;
     int movecount ;
+    int fullmove ; // for the ealuation pourpse
 
     Map<String, Integer> repetation  = new HashMap<>();
 
@@ -73,9 +79,7 @@ public class gametryscreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        promotion = true;
-        firstmove = false;
-        movecount = 0;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gametryscreen);
         activeplayer = getIntent().getExtras().getInt("activeplayer");
@@ -83,6 +87,16 @@ public class gametryscreen extends AppCompatActivity {
         // take the value of activeplayer from intent or other ideas.
         String gamelink = getIntent().getExtras().getString("link");
         ref = FirebaseDatabase.getInstance().getReference().child("games").child(gamelink);
+
+        promotion = true;
+        firstmove = false;
+        movecount = 0;
+        fullmove =-1;
+        drawoffer = findViewById(R.id.drawoffer);
+        drawaccept = findViewById(R.id.drawaccept);
+        resign = findViewById(R.id.resign);
+        offer = 0;
+
 
         mynameview = (TextView)findViewById(R.id.mynametextview);
         mynameview.setText(myname);
@@ -92,15 +106,15 @@ public class gametryscreen extends AppCompatActivity {
         mytime = (TextView) findViewById(R.id.mytime);
         opponanttime = (TextView) findViewById(R.id.opponanttime);
 
-        ot = new chesstimer(null,opponanttime,0);
-        ct = new chesstimer(null,mytime,0);
+//        ot = new chesstimer(null,opponanttime,0);
+//        ct = new chesstimer(null,mytime,0);
 
         Toast.makeText(getApplicationContext(), "game link is : " + gamelink , Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(), "activeplayer is : " + activeplayer , Toast.LENGTH_SHORT).show();
         turntextview = (TextView)findViewById(R.id.whoseturn);
         if(activeplayer==1){
             String FEN = whiteboardtoFEN();
-            Game game = new Game(FEN,myname,"mahitnahi",0,0,false,true,1);
+            Game game = new Game(FEN,myname,"mahitnahi",0,0,0,false,true,1);
             ref.setValue(game);
             allowmove = true;
         }
@@ -130,10 +144,67 @@ public class gametryscreen extends AppCompatActivity {
                     if(game.isDrawn()){
                         Toast.makeText(gametryscreen.this, "The game has been a draw", Toast.LENGTH_SHORT).show();
                         allowmove = false;
-                        incrementcounter(2);
+                        //incrementcounter(2);
                         return;
-
                     }
+
+                    offer = game.getOffer();
+                    if(offer!=0){
+                        // do something MF
+                        if(offer==1){
+                            // white resigns
+                            if(activeplayer==1) {
+                                Toast.makeText(gametryscreen.this, "You won the game", Toast.LENGTH_SHORT).show();
+                                //incrementcounter(1);
+                            }
+                            else if(activeplayer==0){
+                                Toast.makeText(gametryscreen.this, "You won the game", Toast.LENGTH_SHORT).show();
+                                //incrementcounter(0);
+                            }
+                            allowmove = false;
+                            return;
+                        }
+                        else if(offer==2){
+                            // black resigns
+                                if(activeplayer==0) {
+                                    Toast.makeText(gametryscreen.this, "You won the game", Toast.LENGTH_SHORT).show();
+                                    //incrementcounter(1);
+                                }
+                                else if(activeplayer==1){
+                                    Toast.makeText(gametryscreen.this, "You won the game", Toast.LENGTH_SHORT).show();
+                                    //incrementcounter(0);
+                                }
+                                allowmove = false;
+                                return;
+                        }
+                        else if(offer==3){
+                            // white offers draw
+                            if(activeplayer==0) {
+                                drawoffer.setVisibility(View.INVISIBLE);
+                                drawaccept.setVisibility(View.VISIBLE);
+                                drawaccept.setImageResource(R.drawable.drawaccepted);
+                                Toast.makeText(gametryscreen.this, " Draw has been Offred", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else if(activeplayer==1){
+                                Toast.makeText(gametryscreen.this, "You offred a draw", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else if(offer == 4){
+                            if(activeplayer==1) {
+                                // black offers a draw
+                                drawoffer.setVisibility(View.INVISIBLE);
+                                drawaccept.setVisibility(View.VISIBLE);
+                                Toast.makeText(gametryscreen.this, " Draw has been Offred", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else if(activeplayer==0){
+                                Toast.makeText(gametryscreen.this, "You offred a draw", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+
                     String FEN = game.getFEN();
                     int turn = game.getTurn();
                     //Toast.makeText(GameScreen.this, "FEN is  " + FEN, Toast.LENGTH_SHORT).show();
@@ -143,6 +214,10 @@ public class gametryscreen extends AppCompatActivity {
                         turntextview.setText("white to play");
                     else if (turn == 0)
                         turntextview.setText("black to play ");
+
+                    if(turn == 1){
+                        fullmove ++;
+                    }
 
                     if(activeplayer==1) {
                         FENtowhiteboard(board, FEN);
@@ -162,7 +237,7 @@ public class gametryscreen extends AppCompatActivity {
                         int val = repetation.get(FEN);
                         if(val == 2){
                             // The game is a draw ;
-                            Game ngame = new Game(FEN,opponantname,myname,ctime,otime,true,false,1);
+                            Game ngame = new Game(FEN,opponantname,myname,0,0,offer,true,false,1);
                             ref.setValue(ngame);
                         }
                         else {
@@ -182,7 +257,7 @@ public class gametryscreen extends AppCompatActivity {
                     if(ch.isCheck(board,1)){
                         if(ch.ismate(board,1)) {
                             Toast.makeText(getApplicationContext(), "you lost the game", Toast.LENGTH_SHORT).show();
-                            incrementcounter(0);
+                            //incrementcounter(0);
 
                         }else{
                             markcheckking(1);
@@ -191,109 +266,110 @@ public class gametryscreen extends AppCompatActivity {
                     if(ch.isCheck(board,0)){
                         if(ch.ismate(board,0)) {
                             Toast.makeText(getApplicationContext(), "You won the game !!! ", Toast.LENGTH_SHORT).show();
-                            incrementcounter(1);
+                            //incrementcounter(1);
                         }else{
                             markcheckking(0);
                         }
                     }
                     // rethink on this logic
 
-                    int challengertimer = game.getChalengerTimer();
-                    ctime = challengertimer;
-                    if(challengertimer<0)
-                    {
-                        // dont to anything
-                    }
-                    else if(challengertimer >0)
-                    {
-                        if(turn == 1){
-                            ct.settimer(challengertimer);
-//                                if(ct != null) {
-//                                    ct.cancel();
-//                                }
-//                                    ct = new CountDownTimer(challengertimer, 1000) {
-//                                public void onTick(long millisUntilFinished) {
-//                                    // Used for formatting digit to be in 2 digits only
-//                                    NumberFormat f = new DecimalFormat("00");
-//                                    long hour = (millisUntilFinished / 3600000) % 24;
-//                                    long min = (millisUntilFinished / 60000) % 60;
-//                                    long sec = (millisUntilFinished / 1000) % 60;
-//                                    ctime--;
-//                                    if(activeplayer==1)
-//                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-//                                    else
-//                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-//                                }
-//                                // When the task is over it will print 00:00:00 there
-//                                public void onFinish() {
-//                                    if(activeplayer==1)
-//                                        mytime.setText("00:00:00");
-//                                    else
-//                                        opponanttime.setText("00:00:00");
-//                                }
-//                            }.start();
-
-                        }
-                        else{
-                            ct.setRemtime(challengertimer);
-                            NumberFormat f = new DecimalFormat("00");
-                            long hour = (challengertimer / 3600000) % 24;
-                            long min = (challengertimer / 60000) % 60;
-                            long sec = (challengertimer / 1000) % 60;
-                            if(activeplayer==1)
-                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-                            else
-                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-
-                        }
-
-
-                    }
-                    int opponanattimer = game.getOpponantTimer();
-                    otime = opponanattimer;
-                    if(opponanattimer<0)
-                    {
-                        // dont to anything
-                    }
-                    else if(opponanattimer >0)
-                    {
-                        ot.settimer(opponanattimer);
-//                        if(turn == 0){
-//                                if(ot != null)
-//                                    ot.cancel();
-//                                ot = new CountDownTimer(opponanattimer, 1000) {
-//                                public void onTick(long millisUntilFinished) {
-//                                    // Used for formatting digit to be in 2 digits only
-//                                    NumberFormat f = new DecimalFormat("00");
-//                                    long hour = (millisUntilFinished / 3600000) % 24;
-//                                    long min = (millisUntilFinished / 60000) % 60;
-//                                    long sec = (millisUntilFinished / 1000) % 60;
-//                                    otime--;
-//                                    if(activeplayer==1)
-//                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-//                                    else
-//                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-//                                }
-//                                // When the task is over it will print 00:00:00 there
-//                                public void onFinish() {
-//                                    if(activeplayer==1)
-//                                        opponanttime.setText("00:00:00");
-//                                    else
-//                                        mytime.setText("00:00:00");
-//                                }
-//                            }.start();
-                    }
-                    else{
-                            ot.setRemtime(opponanattimer);
-                            NumberFormat f = new DecimalFormat("00");
-                            long hour = (challengertimer / 3600000) % 24;
-                            long min = (challengertimer / 60000) % 60;
-                            long sec = (challengertimer / 1000) % 60;
-                            if(activeplayer==1)
-                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-                            else
-                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
-                        }
+//
+//                    int challengertimer = game.getChalengerTimer();
+//                    ctime = challengertimer;
+//                    if(challengertimer<0)
+//                    {
+//                        // dont to anything
+//                    }
+//                    else if(challengertimer >0)
+//                    {
+//                        if(turn == 1){
+//                            ct.settimer(challengertimer);
+////                                if(ct != null) {
+////                                    ct.cancel();
+////                                }
+////                                    ct = new CountDownTimer(challengertimer, 1000) {
+////                                public void onTick(long millisUntilFinished) {
+////                                    // Used for formatting digit to be in 2 digits only
+////                                    NumberFormat f = new DecimalFormat("00");
+////                                    long hour = (millisUntilFinished / 3600000) % 24;
+////                                    long min = (millisUntilFinished / 60000) % 60;
+////                                    long sec = (millisUntilFinished / 1000) % 60;
+////                                    ctime--;
+////                                    if(activeplayer==1)
+////                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+////                                    else
+////                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+////                                }
+////                                // When the task is over it will print 00:00:00 there
+////                                public void onFinish() {
+////                                    if(activeplayer==1)
+////                                        mytime.setText("00:00:00");
+////                                    else
+////                                        opponanttime.setText("00:00:00");
+////                                }
+////                            }.start();
+//
+//                        }
+//                        else{
+//                            ct.setRemtime(challengertimer);
+//                            NumberFormat f = new DecimalFormat("00");
+//                            long hour = (challengertimer / 3600000) % 24;
+//                            long min = (challengertimer / 60000) % 60;
+//                            long sec = (challengertimer / 1000) % 60;
+//                            if(activeplayer==1)
+//                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+//                            else
+//                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+//
+//                        }
+//
+//
+//                    }
+//                    int opponanattimer = game.getOpponantTimer();
+//                    otime = opponanattimer;
+//                    if(opponanattimer<0)
+//                    {
+//                        // dont to anything
+//                    }
+//                    else if(opponanattimer >0)
+//                    {
+//                        ot.settimer(opponanattimer);
+////                        if(turn == 0){
+////                                if(ot != null)
+////                                    ot.cancel();
+////                                ot = new CountDownTimer(opponanattimer, 1000) {
+////                                public void onTick(long millisUntilFinished) {
+////                                    // Used for formatting digit to be in 2 digits only
+////                                    NumberFormat f = new DecimalFormat("00");
+////                                    long hour = (millisUntilFinished / 3600000) % 24;
+////                                    long min = (millisUntilFinished / 60000) % 60;
+////                                    long sec = (millisUntilFinished / 1000) % 60;
+////                                    otime--;
+////                                    if(activeplayer==1)
+////                                        opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+////                                    else
+////                                        mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+////                                }
+////                                // When the task is over it will print 00:00:00 there
+////                                public void onFinish() {
+////                                    if(activeplayer==1)
+////                                        opponanttime.setText("00:00:00");
+////                                    else
+////                                        mytime.setText("00:00:00");
+////                                }
+////                            }.start();
+//                    }
+//                    else{
+//                            ot.setRemtime(opponanattimer);
+//                            NumberFormat f = new DecimalFormat("00");
+//                            long hour = (challengertimer / 3600000) % 24;
+//                            long min = (challengertimer / 60000) % 60;
+//                            long sec = (challengertimer / 1000) % 60;
+//                            if(activeplayer==1)
+//                                opponanttime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+//                            else
+//                                mytime.setText(f.format(hour) + ":" + f.format(min) + ":" + f.format(sec));
+//                        }
 
                 }
                 else
@@ -312,9 +388,67 @@ public class gametryscreen extends AppCompatActivity {
             }
         };
         ref.addValueEventListener(FENlistner);
+
+        drawoffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(activeplayer==1) {
+                    ref.child("offer").setValue(3);
+                }
+                else if(activeplayer==0){
+                    ref.child("offer").setValue(4);
+                }
+            }
+        });
+
+        drawaccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ref.child("drawn").setValue(true);
+            }
+        });
+
+        resign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(activeplayer==1) {
+                    ref.child("offer").setValue(1);
+                }
+                else if(activeplayer==0){
+                    ref.child("offer").setValue(2);
+                }
+            }
+        });
+
+
+
     }
 
 
+
+    void cpeval(String FEN,char turn){
+        char[][] b = new char[8][8];
+        String cr="";
+        FENtowhiteboard(board,FEN);
+        if(board[7][4]=='K' && board[7][7]=='R'){
+            cr+='K';
+        }
+        if(board[7][4]=='K' && board[7][0]=='R'){
+            cr+='Q';
+        }
+
+        if(board[0][4]=='k' && board[7][7]=='r'){
+            cr+='k';
+        }
+        if(board[7][4]=='k' && board[7][0]=='r'){
+            cr+='q';
+        }
+        if(cr=="")
+            cr = "-";
+        String finalFEN = FEN + " "+ turn + " "+cr +" - "+movecount+ " " + fullmove;
+
+
+    }
 
 
 
@@ -322,6 +456,9 @@ public class gametryscreen extends AppCompatActivity {
     void incrementcounter(int mijinklo){
         if(mijinklo==1){
             DatabaseReference userref = FirebaseDatabase.getInstance().getReference().child("users").child(myname);
+
+
+
             ValueEventListener postListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -1171,6 +1308,49 @@ public class gametryscreen extends AppCompatActivity {
             plastj=plasti=pi=pj=-1;
             promotion = false;
         }
+        if(activeplayer==1){
+            String FEN = whiteboardtoFEN();
+
+            if(firstmove==false) {
+                firstmove = true;
+                Game game = new Game(FEN, myname, opponantname, 900000, -1, offer,false,false,0);
+                ref.setValue(game);
+            }
+            else{
+                Game game;
+                if(movecount==51)
+                    game = new Game(FEN, myname, opponantname, 0, 0,offer, true,false,0);
+                else
+                    game = new Game(FEN, myname, opponantname, 0, 0, offer,false,false,0);
+                ref.setValue(game);
+            }
+//                ct.canceltime();
+//                ot.canceltime();
+            // write in Realtime - database
+        }
+        else if(activeplayer==0){
+//                ct.canceltime();
+//                ot.canceltime();
+            String FEN = blackboardtoFEN();
+            if(firstmove == false){
+                firstmove = true;
+                Game game = new Game(FEN,opponantname,myname,ctime,900000,offer,false,false,1);
+                ref.setValue(game);
+            }
+            else{
+
+                Game game ;
+                if(movecount==51)
+                    game = new Game(FEN,opponantname,myname,0,0,offer,true,false,1);
+                else
+                    game = new Game(FEN,opponantname,myname,0,0,offer,false,false,1);
+                ref.setValue(game);
+            }
+//                ct.canceltime();
+//                ot.canceltime();
+            // write in Realtime - database
+        }
+        lasttap=false;
     }
 
 
@@ -1207,8 +1387,9 @@ public class gametryscreen extends AppCompatActivity {
                 // show UI for promotion
                 promotion = true;
                 LinearLayout promotionbar = (LinearLayout)findViewById(R.id.promotionbar);
-                //promotionbar.setVisibility(View.VISIBLE);
+                promotionbar.setVisibility(View.VISIBLE);
                 pi = i;pj=j;plasti = lasti;plastj=lastj;
+                return;
             }
             //unmarkvalidmoves(lasti,lastj);
             //call make move function
@@ -1226,41 +1407,41 @@ public class gametryscreen extends AppCompatActivity {
 
                 if(firstmove==false) {
                     firstmove = true;
-                    Game game = new Game(FEN, myname, opponantname, 900000, -1, false,false,0);
+                    Game game = new Game(FEN, myname, opponantname, 900000, -1,offer, false,false,0);
                     ref.setValue(game);
                 }
                 else{
                     Game game;
                     if(movecount==51)
-                        game = new Game(FEN, myname, opponantname, ct.getRemtime(), ot.getRemtime(), true,false,0);
+                        game = new Game(FEN, myname, opponantname, 0, 0, offer,true,false,0);
                     else
-                        game = new Game(FEN, myname, opponantname, ct.getRemtime(), ot.getRemtime(), false,false,0);
+                        game = new Game(FEN, myname, opponantname, 0, 0, offer,false,false,0);
                     ref.setValue(game);
                 }
-                ct.canceltime();
-                ot.canceltime();
+//                ct.canceltime();
+//                ot.canceltime();
                 // write in Realtime - database
             }
             else if(activeplayer==0){
-                ct.canceltime();
-                ot.canceltime();
+//                ct.canceltime();
+//                ot.canceltime();
                 String FEN = blackboardtoFEN();
                 if(firstmove == false){
                     firstmove = true;
-                    Game game = new Game(FEN,opponantname,myname,ctime,900000,false,false,1);
+                    Game game = new Game(FEN,opponantname,myname,ctime,900000,offer,false,false,1);
                     ref.setValue(game);
                 }
                 else{
 
                     Game game ;
                     if(movecount==51)
-                        game = new Game(FEN,opponantname,myname,ct.getRemtime(),ot.getRemtime(),true,false,1);
+                        game = new Game(FEN,opponantname,myname,0,0,offer,true,false,1);
                     else
-                        game = new Game(FEN,opponantname,myname,ct.getRemtime(),ot.getRemtime(),false,false,1);
+                        game = new Game(FEN,opponantname,myname,0,0,offer,false,false,1);
                     ref.setValue(game);
                 }
-                ct.canceltime();
-                ot.canceltime();
+//                ct.canceltime();
+//                ot.canceltime();
                 // write in Realtime - database
             }
             lasttap=false;

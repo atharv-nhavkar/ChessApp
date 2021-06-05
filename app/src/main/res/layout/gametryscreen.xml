@@ -28,9 +28,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="center_vertical"
-            android:paddingStart="15dp"
+            android:paddingStart="115dp"
+            android:background="@drawable/roundcorner"
             android:text="White To Play"
-            android:textColor="#FF5722"
+            android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -39,7 +40,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:visibility="invisible">
+            android:visibility="visible">
 
 
             <ImageView
@@ -87,14 +88,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
 
-                android:fontFamily="@font/aclonica"
+                android:fontFamily="@font/biorhyme"
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="player1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#FFEB3B"
                 android:textColorLink="#FFC107"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
+
 
             <TextView
                 android:id="@+id/opponanttime"
@@ -740,11 +742,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/aclonica"
+                android:fontFamily="@font/biorhyme"
                 android:padding="5dp"
                 android:text="player2"
                 android:textColor="#FFEB3B"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
+
 
             <TextView
                 android:id="@+id/mytime"
@@ -758,13 +761,45 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/timepass"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/drawoffer"
+                android:layout_width="0dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:src="@drawable/drawoffred"/>
+            <ImageView
+                android:id="@+id/resign"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:src="@drawable/resign1"/>
+            <ImageView
+                android:id="@+id/drawaccept"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:src="@drawable/drawaccepted"
+                />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:id="@+id/cpscore"
 
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
+                android:gravity="center_horizontal|center_vertical"
+                android:text="CP:"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
 
 
     </LinearLayout>

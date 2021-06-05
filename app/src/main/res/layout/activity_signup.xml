@@ -23,6 +23,7 @@
         android:drawableLeft="@drawable/ic_action_per"
         android:ems="10"
         android:hint="Username"
+        android:textColorHint="#5C5656"
         android:paddingLeft="10dp"
         android:textColor="@color/white" />
 
@@ -35,6 +36,8 @@
         android:drawableLeft="@drawable/ic_action_user"
         android:ems="10"
         android:hint="Email"
+        android:textColor="@color/white"
+        android:textColorHint="#5C5656"
         android:inputType="textEmailAddress"
         android:paddingLeft="10dp" />
 
@@ -48,6 +51,8 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="#5C5656"
         android:paddingLeft="10dp" />
 
     <EditText
@@ -58,7 +63,9 @@
         android:drawableLeft="@drawable/ic_action_pass"
         android:ems="10"
         android:hint="Confirm Password"
+        android:textColorHint="#5C5656"
         android:inputType="textPassword"
+        android:textColor="@color/white"
         android:paddingLeft="10dp" />
 
     <Button
